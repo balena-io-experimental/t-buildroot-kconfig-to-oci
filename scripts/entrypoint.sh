@@ -6,3 +6,5 @@ echo "output contents at $OUTPUT:"
 find "$(dirname $OUTPUT)" -maxdepth 2
 
 node ./build/index.js
+
+ls /output

@@ -1,8 +1,8 @@
 # this is "service-source" because we're re-using the same transformer for building different kinds of docker-images
 # in the future that will be simplified
 type: type-product-os-t-service-source@1.1.1
-name: Transformer template # 👈 change this
-version: 0.1.1
+name: Buildroot Kconfig to OCI Source Transformer
+version: 0.1.2
 data:
   # The platforms the transformer is built for. Is primarily useful if you do platform-specific
   # things and want maximum performance. (The workers have Qemu and thus can run images for any platform)
@@ -31,14 +31,14 @@ data:
         properties:
           type:
             # this runs your transformer on all instances of the same major version of the input type
-            pattern: type-my-input-type@1.* # 👈 change this
+            pattern: type-balena-io-playground-t-buildroot-kconfig@1.* # 👈 change this
           version:
             # only run on draft versions (aka pre-releases). You probably don't want to change this
             pattern: ^[^+]*-
-          data: # 👈 change this (or reove it completely if a match on the type is enough)
-            type: object
-            required:
-              - someProperty
-            properties:
-              someProperty:
-                type: string
+          # data: # 👈 change this (or reove it completely if a match on the type is enough)
+          #   type: object
+          #   required:
+          #     - someProperty
+          #   properties:
+          #     someProperty:
+          #       type: string
