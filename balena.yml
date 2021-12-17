@@ -1,0 +1,44 @@
+# this is "service-source" because we're re-using the same transformer for building different kinds of docker-images
+# in the future that will be simplified
+type: type-product-os-t-service-source@1.1.1
+name: Transformer template # 👈 change this
+version: 0.1.1
+data:
+  # The platforms the transformer is built for. Is primarily useful if you do platform-specific
+  # things and want maximum performance. (The workers have Qemu and thus can run images for any platform)
+  platforms:
+    linux/amd64: {}
+
+  $transformer: {}
+  # the below is needed, if you're using private packages
+  #encryptedSecrets:
+  #  buildSecrets:
+  #    NPM_TOKEN: >-
+  #      WjdzolKFfsMp0xMxPOEpZizVEFPjKj6nwHzecYlVupHN13JT033Iz6FR4NgUUAkT7W6DHVM+pWPGCQi0hfd/KM5D5bdJLvLYNsTRAC7LUQancYIXy8Zt3BDR6JNeoRVCU8dGjnOX1wflcXgeP/4a9SMuuh5MD3lFzWuW8DYMKDcAchv9hNg5ZXp6ofwsA/QQ589fyrG7FtjozWRL/iBR9nsdh4lvWq3jZvJv1gl215HCMI+oeW6sP9VSBElq/QzH63Nscup+JbsEkTjIzh75s41Jhf0JwKT+1IL/Qcs7jTLwMZ4XEsHArSHD1imZtcj+FvPTebGpH2Tp8zEwVar0jQ==
+  fragment:
+    type: transformer@1.0.0
+    data:
+      targetPlatform: linux/amd64
+
+      # this is a JSON schema (YAML is just a prettier superset of JSON) that describes the shape of contracts your
+      # Transformer should run on.
+      # This can just match on the type or have arbitrary complex rules for the input contract's data
+      inputFilter:
+        type: object
+        required:
+          - type
+          - data
+        properties:
+          type:
+            # this runs your transformer on all instances of the same major version of the input type
+            pattern: type-my-input-type@1.* # 👈 change this
+          version:
+            # only run on draft versions (aka pre-releases). You probably don't want to change this
+            pattern: ^[^+]*-
+          data: # 👈 change this (or reove it completely if a match on the type is enough)
+            type: object
+            required:
+              - someProperty
+            properties:
+              someProperty:
+                type: string
