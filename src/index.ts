@@ -24,9 +24,7 @@ const generateDockerfile = async (buildrootVersion="2021.02.4") => {
 			unzip \
 			wget
 
-	RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
-		/usr/sbin/locale-gen && \
-		useradd -ms /bin/bash br-user && \
+	RUN useradd -ms /bin/bash br-user && \
 		chown -R br-user:br-user /home/br-user
 
 	USER br-user
