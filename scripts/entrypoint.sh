@@ -2,4 +2,4 @@
 echo "t-buildroot-kconfig-to-oci transformer entrypoint starting ..."
 node ./build/index.js
 
-ls /output
+ls /output/result-artifacts1
