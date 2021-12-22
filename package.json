@@ -1,6 +1,6 @@
 {
   "name": "t-buildroot-kconfig-to-oci-source",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "private": true,
   "main": "build/index.js",
@@ -17,6 +17,6 @@
   },
   "license": "UNLICENSED",
   "versionist": {
-    "publishedAt": "2021-12-22T12:20:03.539Z"
+    "publishedAt": "2021-12-22T13:01:27.567Z"
   }
 }
