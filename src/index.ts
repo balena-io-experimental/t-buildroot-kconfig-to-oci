@@ -21,12 +21,10 @@ RUN install_packages \
 		rsync \
 		unzip \
 		wget
-` + 
-+ "RUN sed -i 's/# \(en_US.UTF-8\)/\1/'" + 
-`/etc/locale.gen && \
-	/usr/sbin/locale-gen && \
-	useradd -ms /bin/bash br-user && \
-	chown -R br-user:br-user /home/br-user
+RUN sed -i 's/# ${"\\"}(en_US.UTF-8${"\\"})/${"\\"}1/' /etc/locale.gen && \
+/usr/sbin/locale-gen && \
+useradd -ms /bin/bash br-user && \
+chown -R br-user:br-user /home/br-user
 USER br-user
 WORKDIR /home/br-user
 ENV LC_ALL=en_US.UTF-8
@@ -48,6 +46,7 @@ FROM scratch
 COPY --from=rootfs rootfs/ /
 SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 `
+
 	return dockerfile;
 }
 
