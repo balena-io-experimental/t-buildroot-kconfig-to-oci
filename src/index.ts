@@ -21,7 +21,9 @@ RUN install_packages \
 		rsync \
 		unzip \
 		wget
-RUN useradd -ms /bin/bash br-user && \
+RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
+	/usr/sbin/locale-gen && \
+	useradd -ms /bin/bash br-user && \
 	chown -R br-user:br-user /home/br-user
 USER br-user
 WORKDIR /home/br-user
