@@ -71,9 +71,9 @@ BR2_${arch}=y
 let result =defaultConf;
 configs.forEach(config => {
 	result =`
-	${result}
-	${config}
-	`;
+${result}
+${config}
+`;
 });
 return result;
 
