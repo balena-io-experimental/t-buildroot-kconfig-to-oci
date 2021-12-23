@@ -5,7 +5,6 @@ import { createOutputDir, readInput, writeOutputs } from './transformer';
 
 console.log('t-buildroot-kconfig-to-oci-source Started');
 
-// const generateCustomConf = () => {}
 
 const generateDockerfile = async (buildrootVersion="2021.02.4") => {
 	let dockerfile = `
@@ -49,6 +48,37 @@ SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 	return dockerfile;
 }
 
+const generateCustomConf = async (configs:Array<string>,arch:string) => {
+	let defaultConf = `
+BR2_TOOLCHAIN_BUILDROOT_CXX=y
+BR2_TOOLCHAIN_BUILDROOT_GLIBC=y
+BR2_KERNEL_HEADERS_4_19=y
+BR2_GCC_ENABLE_LTO=y
+
+# We don't need init inside a container
+BR2_INIT_NONE=y
+
+
+BR2_PACKAGE_BUSYBOX=y
+
+# We don't need a system shell or ifupdown-scripts
+BR2_SYSTEM_BIN_SH_NONE=n
+BR2_PACKAGE_IFUPDOWN_SCRIPTS=n
+
+BR2_${arch}=y
+
+`;
+let result =defaultConf;
+configs.forEach(config => {
+	result =`
+	${result}
+	${config}
+	`;
+});
+return result;
+
+}
+
 const run = async () => {
 	const input = await readInput();
 	console.log('input:', input.contract);
@@ -60,6 +90,12 @@ const run = async () => {
 	let dockerfile = await generateDockerfile();
 	console.log("Dockerfile",dockerfile.trim())
 	await fs.promises.writeFile(`${outputDir}/Dockerfile`, dockerfile);
+
+	let arch:string = input.contract.data.arch || 'x86_64';
+
+	let cfg = await generateCustomConf(input.contract.data.configs,arch);
+	console.log("custom_conf.cfg",cfg.trim())
+	await fs.promises.writeFile(`${outputDir}/custom_conf.cfg`, cfg.trim());
 
 
 	const outContract = {
