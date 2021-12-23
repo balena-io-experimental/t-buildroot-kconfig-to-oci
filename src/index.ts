@@ -101,6 +101,9 @@ const run = async () => {
 	const outContract = {
 		type: 'type-product-os-t-service-source@1.1.1',
 		data: {
+			platforms: {
+				  "linux/amd64": {}
+			},
 			fragment: {
 				type: 'image@1.0.0'
 			},
