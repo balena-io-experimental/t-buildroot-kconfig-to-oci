@@ -21,7 +21,9 @@ RUN install_packages \
 		rsync \
 		unzip \
 		wget
-RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
+` + 
++ "RUN sed -i 's/# \(en_US.UTF-8\)/\1/'" + 
+`/etc/locale.gen && \
 	/usr/sbin/locale-gen && \
 	useradd -ms /bin/bash br-user && \
 	chown -R br-user:br-user /home/br-user
@@ -45,8 +47,7 @@ RUN tar xpf /home/br-user/output/images/rootfs.tar -C /rootfs
 FROM scratch
 COPY --from=rootfs rootfs/ /
 SHELL ["/bin/sh", "-o", "pipefail", "-c"]
-	`
-
+`
 	return dockerfile;
 }
 
