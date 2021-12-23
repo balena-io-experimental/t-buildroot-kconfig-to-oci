@@ -2,7 +2,7 @@
 # in the future that will be simplified
 type: type-product-os-t-service-source@1.1.1
 name: Buildroot Kconfig to OCI Source Transformer
-version: 0.1.4
+version: 0.1.5
 data:
   # The platforms the transformer is built for. Is primarily useful if you do platform-specific
   # things and want maximum performance. (The workers have Qemu and thus can run images for any platform)

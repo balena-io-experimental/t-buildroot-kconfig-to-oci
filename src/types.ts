@@ -3,6 +3,7 @@ import { core } from '@balena/jellyfish-types';
 type InData = {
 	// everything in here should be part of the input filter or the input type's schema
 	configs: Array<string>;
+	arch: string
 };
 
 export interface OutData {
